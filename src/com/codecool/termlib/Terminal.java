@@ -30,6 +30,7 @@ public class Terminal {
      * (i.e.: underlined, dim, bright) to the terminal defaults.
      */
     public void resetStyle() {
+        command("\033[0m");
     }
 
     /**
@@ -38,6 +39,7 @@ public class Terminal {
      * Might reset cursor position.
      */
     public void clearScreen() {
+        command("\033[2J");
     }
 
     /**
@@ -50,6 +52,8 @@ public class Terminal {
      * @param y Row number.
      */
     public void moveTo(Integer x, Integer y) {
+        String cursorPosition = "\033[" + String.valueOf(x) + ";" + String.valueOf(y)+ "H";
+        command(cursorPosition);
     }
 
     /**
@@ -60,6 +64,18 @@ public class Terminal {
      * @param color The color to set.
      */
     public void setColor(Color color) {
+        int colorCode;
+        if (color == Color.BLACK) {colorCode = 30;}
+        else if (color == Color.RED) {colorCode = 31;}
+        else if (color == Color.GREEN) {colorCode = 32;}
+        else if (color == Color.YELLOW) {colorCode = 33;}
+        else if (color == Color.BLUE) {colorCode = 34;}
+        else if (color == Color.MAGENTA) {colorCode = 35;}
+        else if (color == Color.CYAN) {colorCode = 36;}
+        else {colorCode = 37;}
+
+        String newColor = "\033[" + String.valueOf(colorCode) + "m";
+        command(newColor);
     }
 
     /**
@@ -70,6 +86,18 @@ public class Terminal {
      * @param color The background color to set.
      */
     public void setBgColor(Color color) {
+        int colorCode;
+        if (color == Color.BLACK) {colorCode = 40;}
+        else if (color == Color.RED) {colorCode = 41;}
+        else if (color == Color.GREEN) {colorCode = 42;}
+        else if (color == Color.YELLOW) {colorCode = 43;}
+        else if (color == Color.BLUE) {colorCode = 44;}
+        else if (color == Color.MAGENTA) {colorCode = 45;}
+        else if (color == Color.CYAN) {colorCode = 46;}
+        else {colorCode = 47;}
+
+        String newColor = "\033[" + String.valueOf(colorCode) + "m";
+        command(newColor);
     }
 
     /**
@@ -92,6 +120,17 @@ public class Terminal {
      * @param amount Step the cursor this many times.
      */
     public void moveCursor(Direction direction, Integer amount) {
+        String moveCursor;
+            if (direction == Direction.FORWARD) {
+                moveCursor = "\033[" + String.valueOf(amount) + "C";
+            }else if (direction == Direction.BACKWARD) {
+                moveCursor = "\033[" + String.valueOf(amount) + "D";
+            }else if (direction == Direction.UP) {
+                moveCursor = "\033[" + String.valueOf(amount) + "A";
+            }else {
+                moveCursor = "\033[" + String.valueOf(amount) + "B";
+            }
+        command(moveCursor);
     }
 
     /**
@@ -105,6 +144,8 @@ public class Terminal {
      * position.
      */
     public void setChar(char c) {
+        command(String.valueOf(c));
+        command("\033[D");
     }
 
     /**
@@ -116,5 +157,6 @@ public class Terminal {
      * @param commandString The unique part of a command sequence.
      */
     private void command(String commandString) {
+	    System.out.print(commandString);
     }
 }
