@@ -2,21 +2,21 @@ import com.codecool.termlib.Terminal;
 import com.codecool.termlib.Direction;
 import com.codecool.termlib.Attribute;
 import com.codecool.termlib.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import java.util.Scanner;
 import java.io.InputStream;
 import java.io.*;
 
 public class Main {
-    
     private static int xPosition = 0;
     private static int yPosition = 0;
     static Terminal terminal = new Terminal();
     private static int turnCounter = 1;
 
 	private static String makeBoard(){
-		
-
 		terminal.setColor(Color.BLACK);
 		terminal.setBgColor(Color.WHITE);
 		String board = new String();
@@ -42,8 +42,6 @@ public class Main {
 		}
 		return board;
 	}
-		
-		
     
     private static void changePosition(Direction direction) {
         if (direction == Direction.FORWARD) {
@@ -94,7 +92,6 @@ public class Main {
         }
         return '0';
     }
-    
     
     private static void setUpTerminal() {
         try {
@@ -161,3 +158,4 @@ public class Main {
 	    }
 	}
 }
+
