@@ -15,6 +15,7 @@ public class Main {
     private static int yPosition = 0;
     static Terminal terminal = new Terminal();
     private static int turnCounter = 1;
+    static PlayingField playingField = new PlayingField();
 
 	private static String makeBoard(){
 		terminal.setColor(Color.BLACK);
@@ -135,15 +136,25 @@ public class Main {
             if (input == 's') {
                 changePosition(Direction.DOWN);
             }
+            if (input == 'g') {
+                playingField.printArray();
+            }
+            if (input == 'p') {
+                System.out.print(turnCounter);
+            }
             
             if (input == 'j') {
                 System.out.print("\033[48;5;231m");
                 if (turnCounter % 2 == 0) {                
                     terminal.setColor(Color.RED);
                     terminal.setChar('X');
+                    playingField.setFieldsValue(xPosition, yPosition, "X");
+                    playingField.winconditionCheck(xPosition, yPosition, turnCounter, "X");
                 } else {
                     terminal.setColor(Color.BLUE);
                     terminal.setChar('O');
+                    playingField.setFieldsValue(xPosition, yPosition, "O");
+                    playingField.winconditionCheck(xPosition, yPosition, turnCounter, "O");
                 }
                 turnCounter++;
             }
