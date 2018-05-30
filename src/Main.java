@@ -11,36 +11,35 @@ import java.io.InputStream;
 import java.io.*;
 
 public class Main {
-
+	
     public static void main(String[] args) {
-		//System.out.print("\u2503\u254B");
-        //System.out.print("\u250F\u2501\u2501\u2533\u2501\u2513\n\u2503\n\u2523\u2501\u254B\u2501\u252B\n\u2517\u2501\u253B\u2501\u251B");
+		Terminal terminal = new Terminal();
+
+		terminal.setColor(Color.BLACK);
+		terminal.setBgColor(Color.WHITE);
 		String[][] alist = new String[10][10];
-		String board = new String();		
-		for (int k = 0; k < 10; k++) {
-			Arrays.fill(alist[k], " ");
-		}
+		for (int k = 0; k < 10; k++) {Arrays.fill(alist[k], " ");}
+		String board = new String();
 		for (int i = 0; i < 11; i++) {
-			if (i == 0){board += "┏";
+			if (i == 0){board += "\033[48;5;231m┏";
 						for (int j = 0; j < 9; j++) {board += "━━━┳";}
-						board += "━━━┓\n";
+						board += "━━━┓\033[48;5;16m\n";
 						}
-			else if (i == 10) {board += "┃";
+			else if (i == 10) {board += "\033[48;5;231m┃";
 							  for (int j = 0; j < 9; j++) {board += "   ┃";}
-							  board += "   ┃\n";
-							  board += "┗";
+							  board += "   ┃\033[48;5;16m\n";
+							  board += "\033[48;5;231m┗";
 							  for (int j = 0; j < 9; j++) {board += "━━━┻";}
-							  board += "━━━┛\n";
+							  board += "━━━┛\033[48;5;16m\n";
 							  }
-			else {board += "┃";
+			else {board += "\033[48;5;231m┃";
 				  for (int j = 0; j < 9; j++) {board += "   ┃";}
-				  board += "   ┃\n";
-				  board += "┣";
+				  board += "   ┃\033[48;5;16m\n";
+				  board += "\033[48;5;231m┣";
 				  for (int j = 0; j < 9; j++) {board += "━━━╋";}
-				  board += "━━━┫\n";	
+				  board += "━━━┫\033[48;5;16m\n";	
 				  }
 		}
-		
 		System.out.print(board);
     	}
     
