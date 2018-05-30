@@ -11,14 +11,11 @@ import java.io.InputStream;
 import java.io.*;
 
 public class Main {
-	
-    public static void main(String[] args) {
+	private static String makeBoard(){
 		Terminal terminal = new Terminal();
 
 		terminal.setColor(Color.BLACK);
 		terminal.setBgColor(Color.WHITE);
-		String[][] alist = new String[10][10];
-		for (int k = 0; k < 10; k++) {Arrays.fill(alist[k], " ");}
 		String board = new String();
 		for (int i = 0; i < 11; i++) {
 			if (i == 0){board += "\033[48;5;231m┏";
@@ -39,9 +36,14 @@ public class Main {
 				  for (int j = 0; j < 9; j++) {board += "━━━╋";}
 				  board += "━━━┫\033[48;5;16m\n";	
 				  }
+			}
+		return board;
 		}
-		System.out.print(board);
-    	}
+    public static void main(String[] args) {
+		System.out.print(makeBoard());
+		}
+		
+    	
     
 }
 
