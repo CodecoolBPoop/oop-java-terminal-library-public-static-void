@@ -13,4 +13,19 @@ public class Main {
         //System.out.print("ok");
     }
     
+    private byte xPosition = 0;
+    private byte yPosition = 0;
+    
+    private static void changeXPosition(Direction direction) {
+        if (direction == Direction.FORWARD) {
+            yPosition += 1;
+        }else if (direction == Direction.BACKWARD) {
+            yPosition -= 1;
+        }else if (direction == Direction.UP) {
+            xPosition -= 1;
+        }else {
+            xPosition += 1;
+        }
+    }
+    
 }
