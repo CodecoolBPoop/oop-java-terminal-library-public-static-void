@@ -35,9 +35,9 @@ public class PlayingField {
         playingField[x][y] = value;
     }
     
-	public boolean checkOccupation(int x, int y){
-	if (playingField[x][y] == "O" || playingField[x][y] == "X"){return false;}
-	return true;
+	public boolean checkAvailability(int x, int y){
+	if (playingField[x][y] == " "){return true;}
+	return false;
 	}
 	
 	public void win (String player){

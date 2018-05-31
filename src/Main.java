@@ -131,7 +131,7 @@ public class Main {
             }
             
             if (input == 'j') {
-				if (playingField.checkOccupation(xPosition, yPosition)) {               
+				if (playingField.checkAvailability(xPosition, yPosition)) {               
 					System.out.print("\033[48;5;231m");
 		            if (turnCounter % 2 == 0) {                
 		                terminal.setColor(Color.RED);
