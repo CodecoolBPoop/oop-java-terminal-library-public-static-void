@@ -15,6 +15,7 @@ public class Main {
     private static int yPosition = 0;
     static Terminal terminal = new Terminal();
     private static int turnCounter = 1;
+    static PlayingField playingField = new PlayingField();
 
 	private static String makeBoard(){
 		terminal.setColor(Color.BLACK);
@@ -45,40 +46,27 @@ public class Main {
     
     private static void changePosition(Direction direction) {
         if (direction == Direction.FORWARD) {
-            if (xPosition != 9) {
-                xPosition += 1;
+            if (yPosition != 9) {
+                yPosition += 1;
                 terminal.moveCursor(Direction.FORWARD, 4);
             }
         }else if (direction == Direction.BACKWARD) {
-            if (xPosition != 0) {
-                xPosition -= 1;
+            if (yPosition != 0) {
+                yPosition -= 1;
                 terminal.moveCursor(Direction.BACKWARD, 4);
             }
         }else if (direction == Direction.UP) {
-            if (yPosition != 0) {
-                yPosition -= 1;
+            if (xPosition != 0) {
+                xPosition -= 1;
                 terminal.moveCursor(Direction.UP, 2);
             }
         }else {
-            if (yPosition != 9) {
-                yPosition += 1;
+            if (xPosition != 9) {
+                xPosition += 1;
                 terminal.moveCursor(Direction.DOWN, 2);
             }
         }
-    }
-    
-    
-    private static void moveCursor(Direction direction) {
-        if (direction == Direction.FORWARD) {
-            terminal.moveCursor(Direction.FORWARD, 4);
-        }else if (direction == Direction.BACKWARD) {
-            terminal.moveCursor(Direction.BACKWARD, 4);
-        }else if (direction == Direction.UP) {
-            terminal.moveCursor(Direction.UP, 2);
-        }else {
-            terminal.moveCursor(Direction.DOWN, 2);
-        }
-    }    
+    }  
     
     
     private static Character tryToRead() {
@@ -135,15 +123,25 @@ public class Main {
             if (input == 's') {
                 changePosition(Direction.DOWN);
             }
+            if (input == 'g') {
+                playingField.printArray();
+            }
+            if (input == 'p') {
+                System.out.print(turnCounter);
+            }
             
             if (input == 'j') {
                 System.out.print("\033[48;5;231m");
                 if (turnCounter % 2 == 0) {                
                     terminal.setColor(Color.RED);
                     terminal.setChar('X');
+                    playingField.setFieldsValue(xPosition, yPosition, "X");
+                    playingField.winconditionCheck(xPosition, yPosition, turnCounter, "X");
                 } else {
                     terminal.setColor(Color.BLUE);
                     terminal.setChar('O');
+                    playingField.setFieldsValue(xPosition, yPosition, "O");
+                    playingField.winconditionCheck(xPosition, yPosition, turnCounter, "O");
                 }
                 turnCounter++;
             }
