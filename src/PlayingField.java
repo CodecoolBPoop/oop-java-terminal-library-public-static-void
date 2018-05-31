@@ -35,6 +35,10 @@ public class PlayingField {
         playingField[x][y] = value;
     }
     
+	public boolean checkAvailability(int x, int y){
+	return (playingField[x][y] == " ");
+	}
+	
 	public void win (String player){
 		terminal.clearScreen();
 		System.out.print(player + "player win");
