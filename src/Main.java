@@ -131,21 +131,22 @@ public class Main {
             }
             
             if (input == 'j') {
-                System.out.print("\033[48;5;231m");
-                if (turnCounter % 2 == 0) {                
-                    terminal.setColor(Color.RED);
-                    terminal.setChar('X');
-                    playingField.setFieldsValue(xPosition, yPosition, "X");
-                    playingField.winconditionCheck(xPosition, yPosition, turnCounter, "X");
-                } else {
-                    terminal.setColor(Color.BLUE);
-                    terminal.setChar('O');
-                    playingField.setFieldsValue(xPosition, yPosition, "O");
-                    playingField.winconditionCheck(xPosition, yPosition, turnCounter, "O");
-                }
-                turnCounter++;
-            }
-           
+				if (playingField.checkOccupation(xPosition, yPosition)) {               
+					System.out.print("\033[48;5;231m");
+		            if (turnCounter % 2 == 0) {                
+		                terminal.setColor(Color.RED);
+		                terminal.setChar('X');
+		                playingField.setFieldsValue(xPosition, yPosition, "X");
+		                playingField.winconditionCheck(xPosition, yPosition, turnCounter, "X");
+		            } else {
+		                terminal.setColor(Color.BLUE);
+		                terminal.setChar('O');
+		                playingField.setFieldsValue(xPosition, yPosition, "O");
+		                playingField.winconditionCheck(xPosition, yPosition, turnCounter, "O");
+		            }
+		            turnCounter++;
+		        }
+           }
             if (input == 'x') {
                 terminal.resetStyle();
                 terminal.clearScreen();

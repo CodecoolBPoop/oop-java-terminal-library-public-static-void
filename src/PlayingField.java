@@ -35,6 +35,11 @@ public class PlayingField {
         playingField[x][y] = value;
     }
     
+	public boolean checkOccupation(int x, int y){
+	if (playingField[x][y] == "O" || playingField[x][y] == "X"){return false;}
+	return true;
+	}
+	
 	public void win (String player){
 		terminal.clearScreen();
 		System.out.print(player + "player win");
