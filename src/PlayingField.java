@@ -42,18 +42,25 @@ public class PlayingField {
 	
 	public void win (String player){
 		terminal.clearScreen();
-		System.out.print(player + "player win");
+		System.out.print("\"" + player + "\" player win!");
+		System.out.print(" If you want to start a new game, press \"y\"! Press \"x\" to exit!");
 	}
 	
 	
-	public void winconditionCheck(int x, int y, int turnNumber, String player) {
-	    checkHorizontally(x, y, turnNumber, player);
-	    checkVertically(x, y, turnNumber, player);
-	    checkDiagonalRight(x, y, turnNumber, player);
-	    checkDiagonalLeft(x, y, turnNumber, player);
+	public boolean winconditionCheck(int x, int y, int turnNumber, String player) {
+	    if (checkHorizontally(x, y, turnNumber, player)) {
+	        return true;
+	    } else if (checkVertically(x, y, turnNumber, player)) {
+	        return true;
+	    } else if (checkDiagonalRight(x, y, turnNumber, player)) {
+	        return true;
+	    } else if (checkDiagonalLeft(x, y, turnNumber, player)) {
+	        return true;
+	    }
+	    return false;
 	}
 	
-    public void checkHorizontally(int x, int y, int turnNumber, String player) {
+    public boolean checkHorizontally(int x, int y, int turnNumber, String player) {
 		if (turnNumber > 8){
 		    String sign = player;
 		    for (int j = 1; j < 5; j++) {   
@@ -61,7 +68,7 @@ public class PlayingField {
 		            if (playingField[x+j][y] == player) {
 		                sign += playingField[x+j][y];
 		                if (sign.length() == 5) {
-		                    win(player);
+		                    return true;
 	                    }
 		            } else {
 		                break;
@@ -73,7 +80,7 @@ public class PlayingField {
 		            if (playingField[x-j][y] == player) {
 		                sign += playingField[x-j][y];
 		                if (sign.length() == 5) {
-		                    win(player);
+		                    return true;
 	                    }
 		            } else {
 		                break;
@@ -81,9 +88,10 @@ public class PlayingField {
 		        }
 		    }
 	    }
+	    return false;
     }
 		    
-	public void checkVertically(int x, int y, int turnNumber, String player) {
+	public boolean checkVertically(int x, int y, int turnNumber, String player) {
 		if (turnNumber > 8){	    
             String sign = player;
             for (int j = 1; j < 5; j++) {   
@@ -91,7 +99,7 @@ public class PlayingField {
 		            if (playingField[x][y+j] == player) {
 		                sign += playingField[x][y+j];
 		                if (sign.length() == 5) {
-		                    win(player);
+		                    return true;
 	                    }
 		            } else {
 		                break;
@@ -103,7 +111,7 @@ public class PlayingField {
 		            if (playingField[x][y-j] == player) {
 		                sign += playingField[x][y-j];
 		                if (sign.length() == 5) {
-		                    win(player);
+		                    return true;
 	                    }
 		            } else {
 		                break;
@@ -111,9 +119,10 @@ public class PlayingField {
 		        }
 		    }
 		}
+	    return false;
 	}
 	
-	public void checkDiagonalRight(int x, int y, int turnNumber, String player) {
+	public boolean checkDiagonalRight(int x, int y, int turnNumber, String player) {
 		if (turnNumber > 8){	    
             String sign = player;
             for (int j = 1; j < 5; j++) {   
@@ -121,7 +130,7 @@ public class PlayingField {
 		            if (playingField[x+j][y-j] == player) {
 		                sign += playingField[x+j][y-j];
 		                if (sign.length() == 5) {
-		                    win(player);
+		                    return true;
 	                    }
 		            } else {
 		                break;
@@ -133,7 +142,7 @@ public class PlayingField {
 		            if (playingField[x-j][y+j] == player) {
 		                sign += playingField[x-j][y+j];
 		                if (sign.length() == 5) {
-		                    win(player);
+		                    return true;
 	                    }
 		            } else {
 		                break;
@@ -141,8 +150,9 @@ public class PlayingField {
 		        }
 		    }
 		}
+	    return false;
 	}
-	public void checkDiagonalLeft(int x, int y, int turnNumber, String player) {
+	public boolean checkDiagonalLeft(int x, int y, int turnNumber, String player) {
 		if (turnNumber > 8){	    
             String sign = player;
             for (int j = 1; j < 5; j++) {   
@@ -150,7 +160,7 @@ public class PlayingField {
 		            if (playingField[x+j][y+j] == player) {
 		                sign += playingField[x+j][y+j];
 		                if (sign.length() == 5) {
-		                    win(player);
+		                    return true;
 	                    }
 		            } else {
 		                break;
@@ -162,7 +172,7 @@ public class PlayingField {
 		            if (playingField[x-j][y-j] == player) {
 		                sign += playingField[x-j][y-j];
 		                if (sign.length() == 5) {
-		                    win(player);
+		                    return true;
 	                    }
 		            } else {
 		                break;
@@ -170,6 +180,7 @@ public class PlayingField {
 		        }
 		    }
 		}
+	    return false;
 	}
 }
 

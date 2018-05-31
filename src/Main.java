@@ -14,7 +14,8 @@ public class Main {
     private static int xPosition = 0;
     private static int yPosition = 0;
     private static int curX = 2;
-    private static int curY = 3;    
+    private static int curY = 3; 
+    private static String gameState = "on";   
     static Terminal terminal = new Terminal();
     private static int turnCounter = 1;
     static PlayingField playingField = new PlayingField();
@@ -26,21 +27,21 @@ public class Main {
 		for (int i = 0; i < 11; i++) {
 			if (i == 0){board += "\033[48;5;231m┏";
 			    for (int j = 0; j < 9; j++) {board += "━━━┳";}
-			    board += "━━━┓\033[48;5;16m\n";
+			    board += "━━━┓\033[48;5;16m\r\n";
 		    }
 			else if (i == 10) {board += "\033[48;5;231m┃";
                 for (int j = 0; j < 9; j++) {board += "   ┃";}
-                board += "   ┃\033[48;5;16m\n";
+                board += "   ┃\033[48;5;16m\r\n";
                 board += "\033[48;5;231m┗";
                 for (int j = 0; j < 9; j++) {board += "━━━┻";}
-                board += "━━━┛\033[48;5;16m\n";
+                board += "━━━┛\033[48;5;16m\r\n";
             }
 			else {board += "\033[48;5;231m┃";
                 for (int j = 0; j < 9; j++) {board += "   ┃";}
-                board += "   ┃\033[48;5;16m\n";
+                board += "   ┃\033[48;5;16m\r\n";
                 board += "\033[48;5;231m┣";
                 for (int j = 0; j < 9; j++) {board += "━━━╋";}
-                board += "━━━┫\033[48;5;16m\n";	
+                board += "━━━┫\033[48;5;16m\r\n";	
             }
 		}
 		return board;
@@ -121,15 +122,23 @@ public class Main {
     }
     
     
-    public static void main(String[] args) {
+    public static void game(){
+    
+        playingField.fillField();
+        xPosition = 0;
+        yPosition = 0;
+        curX = 2;
+        curY = 3;
+        turnCounter = 1;
+        
         terminal.clearScreen();
         terminal.moveTo(1, 1);
-		System.out.print(makeBoard());
-		setUpTerminal();
-		displayTurns();
-		terminal.moveTo(2, 3);
-		
-		while (true) {
+	    System.out.print(makeBoard());
+	    setUpTerminal();
+	    displayTurns();
+	    terminal.moveTo(2, 3);
+	
+	    while (true) {
         char input = tryToRead();
         
             if (input == 'd') {
@@ -152,30 +161,73 @@ public class Main {
             }
             
             if (input == 'j') {
-				if (playingField.checkAvailability(xPosition, yPosition)) {               
-					System.out.print("\033[48;5;231m");
-		            if (turnCounter % 2 == 0) {                
-		                terminal.setColor(Color.RED);
-		                terminal.setChar('X');
-		                playingField.setFieldsValue(xPosition, yPosition, "X");
-		                playingField.winconditionCheck(xPosition, yPosition, turnCounter, "X");
-		            } else {
-		                terminal.setColor(Color.BLUE);
-		                terminal.setChar('O');
-		                playingField.setFieldsValue(xPosition, yPosition, "O");
-		                playingField.winconditionCheck(xPosition, yPosition, turnCounter, "O");
-		            }
-		            turnCounter++;
-		            displayTurns();
-		        }
+			    if (playingField.checkAvailability(xPosition, yPosition)) {               
+				    System.out.print("\033[48;5;231m");
+	                if (turnCounter % 2 == 0) {                
+	                    terminal.setColor(Color.RED);
+	                    terminal.setChar('X');
+	                    playingField.setFieldsValue(xPosition, yPosition, "X");
+	                    if (playingField.winconditionCheck(xPosition, yPosition, turnCounter, "X")) {
+	                        break;
+	                    }
+	                } else {
+	                    terminal.setColor(Color.BLUE);
+	                    terminal.setChar('O');
+	                    playingField.setFieldsValue(xPosition, yPosition, "O");
+	                    if (playingField.winconditionCheck(xPosition, yPosition, turnCounter, "O")) {
+	                        break;
+	                    }
+	                }
+	                turnCounter++;
+	                displayTurns();
+	            }
            }
             if (input == 'x') {
+                gameState = "off";
                 terminal.resetStyle();
                 terminal.clearScreen();
                 terminal.moveTo(1, 1);
                 restoreTerminal();           
                 break;  
             }             
+        }
+    }
+    
+    
+    public static void main(String[] args) {
+        
+        while (gameState == "on") {
+            game();
+            
+            String playerSymbol = "";
+            if (turnCounter % 2 == 0) {
+                playerSymbol = "X";
+            } else {
+                playerSymbol = "O";
+            }
+            if (gameState == "on") {
+                playingField.win(playerSymbol);
+            }
+            
+            while (gameState == "on") {
+                char input = tryToRead();
+            
+                if (input == 'y') {
+                    terminal.resetStyle();
+                    terminal.clearScreen();
+                    terminal.moveTo(1, 1);
+                    restoreTerminal();
+                    break;
+                }
+                if (input == 'x') {
+                    gameState = "off";
+                    terminal.resetStyle();
+                    terminal.clearScreen();
+                    terminal.moveTo(1, 1);
+                    restoreTerminal();           
+                    break;  
+                } 
+            }
 	    }
 	}
 }
