@@ -36,8 +36,7 @@ public class PlayingField {
     }
     
 	public boolean checkAvailability(int x, int y){
-	if (playingField[x][y] == " "){return true;}
-	return false;
+	return (playingField[x][y] == " ");
 	}
 	
 	public void win (String player){
