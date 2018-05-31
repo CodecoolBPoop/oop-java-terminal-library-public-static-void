@@ -46,40 +46,27 @@ public class Main {
     
     private static void changePosition(Direction direction) {
         if (direction == Direction.FORWARD) {
-            if (xPosition != 9) {
-                xPosition += 1;
+            if (yPosition != 9) {
+                yPosition += 1;
                 terminal.moveCursor(Direction.FORWARD, 4);
             }
         }else if (direction == Direction.BACKWARD) {
-            if (xPosition != 0) {
-                xPosition -= 1;
+            if (yPosition != 0) {
+                yPosition -= 1;
                 terminal.moveCursor(Direction.BACKWARD, 4);
             }
         }else if (direction == Direction.UP) {
-            if (yPosition != 0) {
-                yPosition -= 1;
+            if (xPosition != 0) {
+                xPosition -= 1;
                 terminal.moveCursor(Direction.UP, 2);
             }
         }else {
-            if (yPosition != 9) {
-                yPosition += 1;
+            if (xPosition != 9) {
+                xPosition += 1;
                 terminal.moveCursor(Direction.DOWN, 2);
             }
         }
-    }
-    
-    
-    private static void moveCursor(Direction direction) {
-        if (direction == Direction.FORWARD) {
-            terminal.moveCursor(Direction.FORWARD, 4);
-        }else if (direction == Direction.BACKWARD) {
-            terminal.moveCursor(Direction.BACKWARD, 4);
-        }else if (direction == Direction.UP) {
-            terminal.moveCursor(Direction.UP, 2);
-        }else {
-            terminal.moveCursor(Direction.DOWN, 2);
-        }
-    }    
+    }  
     
     
     private static Character tryToRead() {
