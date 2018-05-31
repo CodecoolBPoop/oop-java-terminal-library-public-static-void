@@ -29,8 +29,9 @@ public class PlayingField {
             System.out.println(Arrays.toString(playingField[i]));
         }
     }
+
     
-    
+
     public void setFieldsValue(int x, int y, String value) {
         playingField[x][y] = value;
     }
@@ -42,22 +43,6 @@ public class PlayingField {
 	public void win (String player){
 		terminal.clearScreen();
 		System.out.print(player + "player win");
-	}
-	
-	private void rowAndColumnCheck(int modifyCordinate, int otherCordinate, String player){
-	    int markCheck = 0;
-		for (int i = 4; i > - 4; i--) {
-			if(modifyCordinate + i > -1 && modifyCordinate + i < 10){
-				if(playingField[modifyCordinate + i][otherCordinate] == player){
-					markCheck ++;
-					if( markCheck > 4){
-						win(player);
-					}
-				}else{
-					markCheck = 0;
-					}				
-			}
-		}
 	}
 	
 	
@@ -187,3 +172,4 @@ public class PlayingField {
 		}
 	}
 }
+

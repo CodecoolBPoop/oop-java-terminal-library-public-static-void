@@ -13,6 +13,8 @@ import java.io.*;
 public class Main {
     private static int xPosition = 0;
     private static int yPosition = 0;
+    private static int curX = 2;
+    private static int curY = 3;    
     static Terminal terminal = new Terminal();
     private static int turnCounter = 1;
     static PlayingField playingField = new PlayingField();
@@ -48,21 +50,25 @@ public class Main {
         if (direction == Direction.FORWARD) {
             if (yPosition != 9) {
                 yPosition += 1;
+                curY += 4;
                 terminal.moveCursor(Direction.FORWARD, 4);
             }
         }else if (direction == Direction.BACKWARD) {
             if (yPosition != 0) {
                 yPosition -= 1;
+                curY -= 4;
                 terminal.moveCursor(Direction.BACKWARD, 4);
             }
         }else if (direction == Direction.UP) {
             if (xPosition != 0) {
                 xPosition -= 1;
+                curX -= 2;
                 terminal.moveCursor(Direction.UP, 2);
             }
         }else {
             if (xPosition != 9) {
                 xPosition += 1;
+                curX += 2;
                 terminal.moveCursor(Direction.DOWN, 2);
             }
         }
@@ -101,11 +107,26 @@ public class Main {
     }
     
     
+    public static void displayTurns() {
+        terminal.moveTo(23, 1);
+        System.out.print("\033[48;5;231m");
+        if (turnCounter % 2 == 0) {
+            terminal.setColor(Color.RED);                
+            System.out.print("\"X\" Player's turn");
+        } else {
+            terminal.setColor(Color.BLUE);
+            System.out.print("\"O\" Player's turn");
+        }
+        terminal.moveTo(curX, curY);
+    }
+    
+    
     public static void main(String[] args) {
         terminal.clearScreen();
         terminal.moveTo(1, 1);
 		System.out.print(makeBoard());
 		setUpTerminal();
+		displayTurns();
 		terminal.moveTo(2, 3);
 		
 		while (true) {
@@ -145,6 +166,7 @@ public class Main {
 		                playingField.winconditionCheck(xPosition, yPosition, turnCounter, "O");
 		            }
 		            turnCounter++;
+		            displayTurns();
 		        }
            }
             if (input == 'x') {
