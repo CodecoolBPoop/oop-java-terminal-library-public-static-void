@@ -56,35 +56,130 @@ public class PlayingField {
 		}
 	}
 	
-    public void winconditionCheck(int y, int x, int turnNumber, String player) {
-		int markCheck = 0;
+	
+	public void winconditionCheck(int x, int y, int turnNumber, String player) {
+	    checkHorizontally(x, y, turnNumber, player);
+	    checkVertically(x, y, turnNumber, player);
+	    checkDiagonalRight(x, y, turnNumber, player);
+	    checkDiagonalLeft(x, y, turnNumber, player);
+	}
+	
+    public void checkHorizontally(int x, int y, int turnNumber, String player) {
 		if (turnNumber > 8){
-			rowAndColumnCheck(x,y,player);
-			rowAndColumnCheck(y,x,player);
-			for (int i = 4; i > - 4; i--) {
-				if((x + i > -1 && x + i < 10) && (y + i > -1 && y + i < 10)){
-					if(playingField[x + i][y + i] == player){
-						markCheck ++;
-						if( markCheck > 4){
-							win(player);
-					}else{
-						markCheck = 0;
-						}				
-					}
-				}
-			}
-			for (int i = 4; i > - 4; i--) {
-				if((x - i > -1 && x - i < 10) && (y - i > -1 && y - i < 10)){
-					if(playingField[x - i][y - i] == player){
-						markCheck ++;
-						if( markCheck > 4){
-							win(player);
-					}else{
-						markCheck = 0;
-						}				
-					}
-				}
-			}
+		    String sign = player;
+		    for (int j = 1; j < 5; j++) {   
+		        if (x + j < 10) {
+		            if (playingField[x+j][y] == player) {
+		                sign += playingField[x+j][y];
+		                if (sign.length() == 5) {
+		                    win(player);
+	                    }
+		            } else {
+		                break;
+		            }
+		        }
+		    }
+		    for (int j = 1; j < 5; j++) {
+		        if (x - j > -1) {
+		            if (playingField[x-j][y] == player) {
+		                sign += playingField[x-j][y];
+		                if (sign.length() == 5) {
+		                    win(player);
+	                    }
+		            } else {
+		                break;
+		            }
+		        }
+		    }
+	    }
+    }
+		    
+	public void checkVertically(int x, int y, int turnNumber, String player) {
+		if (turnNumber > 8){	    
+            String sign = player;
+            for (int j = 1; j < 5; j++) {   
+		        if (y + j < 10) {
+		            if (playingField[x][y+j] == player) {
+		                sign += playingField[x][y+j];
+		                if (sign.length() == 5) {
+		                    win(player);
+	                    }
+		            } else {
+		                break;
+		            }
+		        }
+		    }
+		    for (int j = 1; j < 5; j++) {
+		        if (y - j > -1) {
+		            if (playingField[x][y-j] == player) {
+		                sign += playingField[x][y-j];
+		                if (sign.length() == 5) {
+		                    win(player);
+	                    }
+		            } else {
+		                break;
+		            }
+		        }
+		    }
+		}
+	}
+	
+	public void checkDiagonalRight(int x, int y, int turnNumber, String player) {
+		if (turnNumber > 8){	    
+            String sign = player;
+            for (int j = 1; j < 5; j++) {   
+		        if (x + j < 10 && y - j  > -1) {
+		            if (playingField[x+j][y-j] == player) {
+		                sign += playingField[x+j][y-j];
+		                if (sign.length() == 5) {
+		                    win(player);
+	                    }
+		            } else {
+		                break;
+		            }
+		        }
+		    }
+		    for (int j = 1; j < 5; j++) {
+		        if (x - j > -1 && y + j < 10) {
+		            if (playingField[x-j][y+j] == player) {
+		                sign += playingField[x-j][y+j];
+		                if (sign.length() == 5) {
+		                    win(player);
+	                    }
+		            } else {
+		                break;
+		            }
+		        }
+		    }
+		}
+	}
+	public void checkDiagonalLeft(int x, int y, int turnNumber, String player) {
+		if (turnNumber > 8){	    
+            String sign = player;
+            for (int j = 1; j < 5; j++) {   
+		        if (x + j < 10 && y + j  < 10) {
+		            if (playingField[x+j][y+j] == player) {
+		                sign += playingField[x+j][y+j];
+		                if (sign.length() == 5) {
+		                    win(player);
+	                    }
+		            } else {
+		                break;
+		            }
+		        }
+		    }
+		    for (int j = 1; j < 5; j++) {
+		        if (x - j > -1 && y - j > -1) {
+		            if (playingField[x-j][y-j] == player) {
+		                sign += playingField[x-j][y-j];
+		                if (sign.length() == 5) {
+		                    win(player);
+	                    }
+		            } else {
+		                break;
+		            }
+		        }
+		    }
 		}
 	}
 }
